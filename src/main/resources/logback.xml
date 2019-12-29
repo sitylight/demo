@@ -1,6 +1,6 @@
 <configuration>
 
-    <property name="DEMO_LOG" value="/logs/demo.log"/>
+    <property name="DEMO_LOG" value="/Users/derrick/logs/demo.log"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
