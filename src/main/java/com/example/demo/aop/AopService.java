@@ -17,8 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AopService {
     private static Logger logger = LoggerFactory.getLogger(AopService.class);
+
     public Object getObjectById(String id) {
-        logger.info("executing method getObjectById() with \"" + id + " \"");
+        logger.debug("executing method getObjectById() with \"" + id + " \"");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

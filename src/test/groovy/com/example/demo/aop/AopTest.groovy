@@ -1,10 +1,3 @@
-// Copyright (c) 2019 Cityline Limited. All rights reserved.
-// ============================================================================
-// CURRENT VERSION 2.0.19
-// ============================================================================
-// CHANGE LOG
-// 2.0.19 : 2019-12-27, derrick, creation
-// ============================================================================
 package com.example.demo.aop
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,17 +9,32 @@ import spock.lang.Specification;
 @SpringBootTest
 class AopTest extends Specification {
     @Autowired
-    private AopService aopService;
+    private AopService aopService
+
+    @Autowired
+    private AopAnnotationService annotationService
 
     def "aopTest"() {
         expect:
         result == aopService.getObjectById(id)
 
         where:
-        id      |   result
-        "11"    |   "11"
-        "22"    |   "22"
-        "33"    |   "33"
-        "44"    |   "44"
+        id   | result
+        "11" | "11"
+        "22" | "22"
+        "33" | "33"
+        "44" | "44"
+    }
+
+    def "aopAnnotationTest"() {
+        expect:
+        result == annotationService.getAnnotationObjectById(id)
+
+        where:
+        id   | result
+        "11" | "11"
+        "22" | "22"
+        "33" | "33"
+        "44" | "44"
     }
 }
