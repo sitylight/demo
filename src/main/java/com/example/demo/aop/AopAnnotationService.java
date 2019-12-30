@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@AopAnnotation
 public class AopAnnotationService {
     private static Logger logger = LoggerFactory.getLogger(AopAnnotationService.class);
 
-    @AopAnnotation
     public Object getAnnotationObjectById(String id) {
         logger.debug("executing method getAnnotationObjectById() with \"" + id + " \"");
         try {

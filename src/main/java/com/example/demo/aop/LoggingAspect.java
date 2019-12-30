@@ -27,29 +27,20 @@ public class LoggingAspect {
     private static Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Pointcut("@annotation(com.example.demo.aop.AopAnnotation)")
-    private void aopLog() {
-
-    }
+    private void aopAnnotationLog() {}
 
     @Order(-99)  // small priority
-    @Around("execution(* com.example.demo.aop..*(..)))")
+    @Around("execution(* com.example.demo.aop..*(..))) and !aopAnnotationLog()")
     public Object profileAllMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
-
-        String className = methodSignature.getDeclaringType().getSimpleName();
-        String methodName = methodSignature.getName();
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        logger.info("start to execute [" + className + "." + methodName + "()]");
-        Object result = proceedingJoinPoint.proceed();
-        stopWatch.stop();
-        logger.info("Execution time of [" + className + "." + methodName + "()]"
-                            + " is " + stopWatch.getTotalTimeMillis() + " ms");
-        return result;
+        return methodProceed(proceedingJoinPoint);
     }
 
-    @Around("aopLog()")
+    @Around("aopAnnotationLog()")
     public Object profileAnnotationMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        return methodProceed(proceedingJoinPoint);
+    }
+
+    private Object methodProceed(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
 
         String className = methodSignature.getDeclaringType().getSimpleName();
@@ -59,8 +50,9 @@ public class LoggingAspect {
         logger.info("start to execute [" + className + "." + methodName + "()]");
         Object result = proceedingJoinPoint.proceed();
         stopWatch.stop();
-        logger.info("Execution time of [" + className + "." + methodName + "()]"
-                + " is " + stopWatch.getTotalTimeMillis() + " ms");
+        logger.info(
+                "Execution time of [" + className + "." + methodName + "()]" + " is " + stopWatch.getTotalTimeMillis()
+                        + " ms");
         return result;
     }
 }
