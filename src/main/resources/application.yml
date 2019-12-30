@@ -1,3 +1,14 @@
 spring:
   aop:
   auto: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/d_demo
+    username: d_demo
+    password: p
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        nameing:
+          physical-strategy: com.example.demo.jpa.TableNameStrategy
+        ddl-auto: update
