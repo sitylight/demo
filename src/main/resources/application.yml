@@ -5,10 +5,17 @@ spring:
     url: jdbc:postgresql://localhost:5432/d_demo
     username: d_demo
     password: p
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 18000   # 10 minutes
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: select 1
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        nameing:
-          physical-strategy: com.example.demo.jpa.TableNameStrategy
-        ddl-auto: update
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      naming:
+        physical-strategy: com.example.demo.strategy.TableNameStrategy   # customized table name strategy
+      ddl-auto: update
+    show-sql: true

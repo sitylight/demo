@@ -5,7 +5,7 @@
 // CHANGE LOG
 // 2.0.19 : 2019-12-30, derrick, creation
 // ============================================================================
-package com.example.demo.jpa;
+package com.example.demo.strategy;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
@@ -24,7 +24,6 @@ import java.util.UUID;
  */
 public class CustomGenerationId implements Configurable, IdentifierGenerator {
     private String idPrefix;
-    private String id;
 
     @Override
     public void configure(Type type, Properties properties, ServiceRegistry serviceRegistry) throws MappingException {

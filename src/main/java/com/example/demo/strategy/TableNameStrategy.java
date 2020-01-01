@@ -5,7 +5,7 @@
 // CHANGE LOG
 // 2.0.19 : 2019-12-30, derrick, creation
 // ============================================================================
-package com.example.demo.jpa;
+package com.example.demo.strategy;
 
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
