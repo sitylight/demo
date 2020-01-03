@@ -26,12 +26,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByName(String name) {
+        return Optional.ofNullable(userRepository.findByName(name));
+    }
+
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public void newOrUpdateUser(final User user) {
+    public void saveUser(final User user) {
         userRepository.save(user);
     }
 }

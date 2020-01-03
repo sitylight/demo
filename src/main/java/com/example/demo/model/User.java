@@ -9,6 +9,7 @@ package com.example.demo.model;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +28,11 @@ public class User implements Serializable {
 
     @Id
     @Column(length = 32)
-    @GeneratedValue(generator = "customGenerationId" )
-    @GenericGenerator(name = "customGenerationId", strategy = "com.example.demo.strategy.CustomGenerationId")
-    private UUID id;
+    @GenericGenerator(
+            name = "customGenerationId",
+            strategy = "com.example.demo.strategy.CustomGenerationId",
+            parameters = {@Parameter(name = "idPrefix", value = "user")})
+    private String id;
 
     @Column
     private String name;
