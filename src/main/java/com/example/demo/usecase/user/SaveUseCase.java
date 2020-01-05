@@ -7,8 +7,6 @@
 // ============================================================================
 package com.example.demo.usecase.user;
 
-import com.example.demo.exception.DemoException;
-import com.example.demo.exception.ErrorCode;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import com.example.demo.usecase.NoOutputUseCase;
@@ -30,14 +28,14 @@ public class SaveUseCase implements NoOutputUseCase<User> {
 
     @Override
     @Transactional(rollbackOn = Exception.class)
-    public void execute(User user) throws Exception {
-        Optional<User> userOptional = userService.getUserByName(user.getName());
+    public void execute(final User user) throws Exception {
+        final Optional<User> userOptional = userService.getUserByName(user.getName());
         if (userOptional.isPresent()) {
             user.setId(userOptional.get().getId());
         } else {
             user.setId(StringUtils.EMPTY);
         }
         userService.saveUser(user);
-        throw new DemoException(ErrorCode.INNER_ERROR.getCode(), ErrorCode.INNER_ERROR.getMessage());
+//        throw new DemoException(ErrorCode.INNER_ERROR.getCode(), ErrorCode.INNER_ERROR.getMessage());
     }
 }

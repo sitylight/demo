@@ -8,21 +8,23 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
+import com.example.demo.usecase.user.SaveUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author derrick
  */
-@Component
+@RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
+    private final SaveUseCase saveUseCase;
 
     @PostMapping("/save/user")
-    public void saveUser(@RequestBody User user) {
-
+    public void saveUser(@RequestBody final User user) throws Exception {
+        saveUseCase.execute(user);
     }
 }

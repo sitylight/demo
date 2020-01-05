@@ -9,29 +9,29 @@ package com.example.demo.model;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * @author derrick
  */
 @Data
 @Entity
+//@GenericGenerator(
+//        name = "customGenerationId",
+//        strategy = "com.example.demo.strategy.CustomGenerationId",
+//        parameters = {@Parameter(name = "idPrefix", value = "user")})
 public class User implements Serializable {
 
     @Id
     @Column(length = 32)
-    @GenericGenerator(
-            name = "customGenerationId",
-            strategy = "com.example.demo.strategy.CustomGenerationId",
-            parameters = {@Parameter(name = "idPrefix", value = "user")})
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    //    @GeneratedValue(generator = "customGenerationId")
+    @GeneratedValue(generator = "jpa-uuid")
     private String id;
 
     @Column

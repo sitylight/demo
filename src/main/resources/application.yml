@@ -1,6 +1,6 @@
 spring:
   aop:
-  auto: false
+  auto: true
   datasource:
     url: jdbc:postgresql://localhost:5432/d_demo
     username: d_demo
