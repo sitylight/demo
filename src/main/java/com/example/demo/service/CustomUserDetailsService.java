@@ -7,11 +7,10 @@
 // ============================================================================
 package com.example.demo.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @author derrick
  */
-public interface UserDetailService {
-    UserDetails loadUserByName(String username);
+public interface CustomUserDetailsService extends UserDetailsService {
 }

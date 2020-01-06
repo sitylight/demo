@@ -9,6 +9,7 @@ package com.example.demo.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
 
@@ -18,12 +19,12 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-//@GenericGenerator(name = "customGenerationId", strategy = "com.example.demo.strategy.CustomGenerationId")
-public class Role extends BaseEntity{
-//    @Id
-//    @GeneratedValue(generator = "customGenerationId")
-//    @Column(length = 32)
-//    private String id;
+public class Role extends BaseEntity implements GrantedAuthority {
 
     private String name;
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }
