@@ -12,6 +12,8 @@ import com.example.demo.service.UserService;
 import com.example.demo.usecase.NoOutputUseCase;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,19 +25,23 @@ import java.util.Optional;
  */
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@Transactional(rollbackOn = Exception.class)
 public class SaveUseCase implements NoOutputUseCase<User> {
+    private Logger logger = LoggerFactory.getLogger(SaveUseCase.class);
+
     private final UserService userService;
 
     @Override
-    @Transactional(rollbackOn = Exception.class)
-    public void execute(final User user) throws Exception {
+    public void execute(final User user) {
         final Optional<User> userOptional = userService.getUserByName(user.getName());
         if (userOptional.isPresent()) {
+            logger.debug("update user [ {} ]", user.getName());
             user.setId(userOptional.get().getId());
         } else {
+            logger.debug("save new user [ {} ]", user.getName());
             user.setId(StringUtils.EMPTY);
         }
         userService.saveUser(user);
-//        throw new DemoException(ErrorCode.INNER_ERROR.getCode(), ErrorCode.INNER_ERROR.getMessage());
+
     }
 }

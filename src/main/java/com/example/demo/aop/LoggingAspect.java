@@ -29,26 +29,33 @@ public class LoggingAspect {
     @Pointcut("@annotation(com.example.demo.aop.AopAnnotation)")
     private void aopAnnotationLog() {}
 
-    @Order(-99)  // small priority
-    @Around("execution(* com.example.demo.aop..*(..))) and !aopAnnotationLog()")
-    public Object profileAllMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        return methodProceed(proceedingJoinPoint);
-    }
-
+    @Order(1)
     @Around("aopAnnotationLog()")
-    public Object profileAnnotationMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    public Object profileAnnotationMethod(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         return methodProceed(proceedingJoinPoint);
     }
 
-    private Object methodProceed(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+    @Order(2)  // small priority
+    @Around("execution(* com.example.demo.aop..*(..))) and !aopAnnotationLog()")
+    public Object profileAllMethods(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        return methodProceed(proceedingJoinPoint);
+    }
 
-        String className = methodSignature.getDeclaringType().getSimpleName();
-        String methodName = methodSignature.getName();
-        StopWatch stopWatch = new StopWatch();
+    @Order(3)
+    @Around("execution(* com.example.demo.usecase..*(..))) and !aopAnnotationLog()")
+    public Object profileUseCaseMethods(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        return methodProceed(proceedingJoinPoint);
+    }
+
+    private Object methodProceed(final ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        final MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+
+        final String className = methodSignature.getDeclaringType().getSimpleName();
+        final String methodName = methodSignature.getName();
+        final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         logger.info("start to execute [" + className + "." + methodName + "()]");
-        Object result = proceedingJoinPoint.proceed();
+        final Object result = proceedingJoinPoint.proceed();
         stopWatch.stop();
         logger.info(
                 "Execution time of [" + className + "." + methodName + "()]" + " is " + stopWatch.getTotalTimeMillis()

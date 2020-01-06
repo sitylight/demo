@@ -19,3 +19,5 @@ spring:
         physical-strategy: com.example.demo.strategy.TableNameStrategy   # customized table name strategy
       ddl-auto: update
     show-sql: true
+server:
+  port: 8010

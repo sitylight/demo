@@ -8,11 +8,7 @@
 // ============================================================================
 package com.example.demo.usecase;
 
-import javax.transaction.Transactional;
-
 @FunctionalInterface
 public interface NoOutputUseCase<T> {
-
-    @Transactional(rollbackOn = Exception.class)
     void execute (T object) throws Exception;
 }

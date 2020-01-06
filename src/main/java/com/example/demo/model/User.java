@@ -7,36 +7,46 @@
 // ============================================================================
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author derrick
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 //@GenericGenerator(
 //        name = "customGenerationId",
 //        strategy = "com.example.demo.strategy.CustomGenerationId",
 //        parameters = {@Parameter(name = "idPrefix", value = "user")})
-public class User implements Serializable {
+public class User extends BaseEntity {
 
-    @Id
+/*    @Id
     @Column(length = 32)
-    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
-    //    @GeneratedValue(generator = "customGenerationId")
-    @GeneratedValue(generator = "jpa-uuid")
-    private String id;
+    //    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "customGenerationId")
+    //    @GeneratedValue(generator = "jpa-uuid")
+    private String id;*/
 
     @Column
     private String name;
 
     @Column
     private String password;
+
+    @OneToMany
+    @JsonIgnore
+    @JoinTable(joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    List<Role> roles = new ArrayList<>();
+
 }

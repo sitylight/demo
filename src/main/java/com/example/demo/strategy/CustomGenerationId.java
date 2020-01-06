@@ -26,19 +26,19 @@ public class CustomGenerationId implements Configurable, IdentifierGenerator {
     private String idPrefix;
 
     @Override
-    public void configure(Type type, Properties properties, ServiceRegistry serviceRegistry) throws MappingException {
+    public void configure(final Type type, final Properties properties, final ServiceRegistry serviceRegistry) throws MappingException {
         this.idPrefix = properties.getProperty("idPrefix");
     }
 
     @Override
-    public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o)
+    public Serializable generate(final SharedSessionContractImplementor sharedSessionContractImplementor, final Object o)
             throws HibernateException {
         return getId();
     }
 
     private String getId() {
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        return idPrefix + "-" + uuid;
+        return UUID.randomUUID().toString().replace("-", "");
+//        return idPrefix + "-" + uuid;
     }
 
 }
